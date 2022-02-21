@@ -226,23 +226,59 @@ Good
 Bad
 ```scss
 .box {
-  padding-left:20px;
-  padding-right:20px;
-  padding-top:10px;
-  padding-bottom:10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 ```
 
 Good
 ```scss
 .box {
-  padding:10px 20px;
+  padding: 10px 20px;
 }
 ```
 
 4. Don't Use Inline-Styles
 > According to the separation of concerns principle, CSS, and HTML should be separated for reasons like better readability and maintenance.
 Another problem using inline-styles is that you need to use !important tag to override!!
+
+5. Use specific classes when necessary.
+
+Bad
+```scss
+.section aside h1 span {
+  margin-left: 25%;
+}
+```
+
+Good
+```scss
+.left-offset {
+  margin-left: 25%;
+}
+```
+
+6. Drop units from zero values.
+
+Bad
+```scss
+div {
+  margin: 20px 0px;
+  letter-spacing: 0%;
+  padding: 0px 5px;
+}
+```
+
+Good
+```scss
+div {
+  margin: 20px 0;
+  letter-spacing: 0;
+  padding: 0 5px;
+}
+```
 
 #Sass
 
