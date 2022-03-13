@@ -32,7 +32,7 @@ Forked from the excellent [Airbnb JavaScript Style Guide](https://github.com/air
   1. [Accessors](#accessors)
   1. [Events](#events)
   1. [jQuery](#jquery)
-  1. [STS Resources](#sts-resources)
+  1. [Resources](#resources)
   1. [License](#license)
   1. [Amendments](#amendments)
 
@@ -1834,6 +1834,41 @@ Forked from the excellent [Airbnb JavaScript Style Guide](https://github.com/air
     // 'coords' is now the 'data' object without its 'type' property.
     ```
 
+ <a name="variables--avoid-hardcodes"></a>
+  - [13.9](#variables--avoid-hardcodes) Avoid hardcodes values
+    > Why? Someone looking at the code would have no idea what the number/ string stands for, how it was calculated and what's the business logic behind this. Instead of hardcoding this value, we could've created a constant as follows:
+
+    ```javascript
+    // bad
+    setInterval(() => {
+      // do something
+    }, 86400000);
+    // WHAT IS THIS 86400000 ??? 🤔
+
+    // good
+    const DAY_IN_MILLISECONDS = 3600 * 24 * 1000; // 86400000
+
+    setInterval(() => {
+    // do something
+    }, DAY_IN_MILLISECONDS);
+    ```
+    ```javascript
+    const createUser = (name, designation, type) => {
+      console.log({name, designation, type});
+    }
+
+    // bad
+    createUser('LocVo', 'Software Developer', '1');
+    // WHAT IS this '1'? 🤔
+
+    // good
+    const USER_TYPES = {
+      REGULAR_EMPLOYEE: '1'
+    }
+
+    createUser('LocVo', 'Software Developer', USER_TYPES.REGULAR_EMPLOYEE);
+     ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Hoisting
@@ -3623,8 +3658,87 @@ avoid to use Jquery in Angular
 
 **[⬆ back to top](#table-of-contents)**
 
-## STS Resources
-- 
+## Resources
+
+**Learning ES6+**
+
+  - [Latest ECMA spec](https://tc39.github.io/ecma262/)
+  - [ExploringJS](https://exploringjs.com/)
+  - [ES6 Compatibility Table](https://kangax.github.io/compat-table/es6/)
+  - [Comprehensive Overview of ES6 Features](http://es6-features.org/)
+  - [The Modern JavaScript Tutorial](https://javascript.info/)
+
+**Read This**
+
+  - [Standard ECMA-262](https://www.ecma-international.org/ecma-262/6.0/index.html)
+
+**Tools**
+
+  - Code Style Linters
+    - [ESlint](https://eslint.org/) - [Airbnb Style .eslintrc](https://github.com/airbnb/javascript/blob/master/linters/.eslintrc)
+    - [JSHint](https://jshint.com/) - [Airbnb Style .jshintrc](https://github.com/airbnb/javascript/blob/master/linters/.jshintrc)
+  - Neutrino Preset - [@neutrinojs/airbnb](https://neutrinojs.org/packages/airbnb/)
+
+**Other Style Guides**
+
+  - [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+  - [Google JavaScript Style Guide (Old)](https://google.github.io/styleguide/javascriptguide.xml)
+  - [jQuery Core Style Guidelines](https://contribute.jquery.org/style-guide/js/)
+  - [Principles of Writing Consistent, Idiomatic JavaScript](https://github.com/rwaldron/idiomatic.js)
+  - [StandardJS](https://standardjs.com)
+
+**Other Styles**
+
+  - [Naming this in nested functions](https://gist.github.com/cjohansen/4135065) - Christian Johansen
+  - [Conditional Callbacks](https://github.com/airbnb/javascript/issues/52) - Ross Allen
+  - [Popular JavaScript Coding Conventions on GitHub](http://sideeffect.kr/popularconvention/#javascript) - JeongHoon Byun
+  - [Multiple var statements in JavaScript, not superfluous](https://benalman.com/news/2012/05/multiple-var-statements-javascript/) - Ben Alman
+
+**Further Reading**
+
+  - [Understanding JavaScript Closures](https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/) - Angus Croll
+  - [Basic JavaScript for the impatient programmer](https://www.2ality.com/2013/06/basic-javascript.html) - Dr. Axel Rauschmayer
+  - [You Might Not Need jQuery](https://youmightnotneedjquery.com/) - Zack Bloom & Adam Schwartz
+  - [ES6 Features](https://github.com/lukehoban/es6features) - Luke Hoban
+  - [Frontend Guidelines](https://github.com/bendc/frontend-guidelines) - Benjamin De Cock
+
+**Books**
+
+  - [JavaScript: The Good Parts](https://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742) - Douglas Crockford
+  - [JavaScript Patterns](https://www.amazon.com/JavaScript-Patterns-Stoyan-Stefanov/dp/0596806752) - Stoyan Stefanov
+  - [Pro JavaScript Design Patterns](https://www.amazon.com/JavaScript-Design-Patterns-Recipes-Problem-Solution/dp/159059908X) - Ross Harmes and Dustin Diaz
+  - [High Performance Web Sites: Essential Knowledge for Front-End Engineers](https://www.amazon.com/High-Performance-Web-Sites-Essential/dp/0596529309) - Steve Souders
+  - [Maintainable JavaScript](https://www.amazon.com/Maintainable-JavaScript-Nicholas-C-Zakas/dp/1449327680) - Nicholas C. Zakas
+  - [JavaScript Web Applications](https://www.amazon.com/JavaScript-Web-Applications-Alex-MacCaw/dp/144930351X) - Alex MacCaw
+  - [Pro JavaScript Techniques](https://www.amazon.com/Pro-JavaScript-Techniques-John-Resig/dp/1590597273) - John Resig
+  - [Smashing Node.js: JavaScript Everywhere](https://www.amazon.com/Smashing-Node-js-JavaScript-Everywhere-Magazine/dp/1119962595) - Guillermo Rauch
+  - [Secrets of the JavaScript Ninja](https://www.amazon.com/Secrets-JavaScript-Ninja-John-Resig/dp/193398869X) - John Resig and Bear Bibeault
+  - [Human JavaScript](http://humanjavascript.com/) - Henrik Joreteg
+  - [Superhero.js](http://superherojs.com/) - Kim Joar Bekkelund, Mads Mobæk, & Olav Bjorkoy
+  - [JSBooks](https://jsbooks.revolunet.com/) - Julien Bouquillon
+  - [Third Party JavaScript](https://www.manning.com/books/third-party-javascript) - Ben Vinegar and Anton Kovalyov
+  - [Effective JavaScript: 68 Specific Ways to Harness the Power of JavaScript](https://amzn.com/0321812182) - David Herman
+  - [Eloquent JavaScript](https://eloquentjavascript.net/) - Marijn Haverbeke
+  - [You Don’t Know JS: ES6 & Beyond](https://shop.oreilly.com/product/0636920033769.do) - Kyle Simpson
+
+**Blogs**
+
+  - [JavaScript Weekly](https://javascriptweekly.com/)
+  - [JavaScript, JavaScript...](https://javascriptweblog.wordpress.com/)
+  - [Bocoup Weblog](https://bocoup.com/weblog)
+  - [Adequately Good](https://www.adequatelygood.com/)
+  - [NCZOnline](https://www.nczonline.net/)
+  - [Perfection Kills](http://perfectionkills.com/)
+  - [Ben Alman](https://benalman.com/)
+  - [Dmitry Baranovskiy](http://dmitry.baranovskiy.com/)
+  - [nettuts](https://code.tutsplus.com/?s=javascript)
+  - [JavaScript Is Sexy](https://javascriptissexy.com/)
+
+**Podcasts**
+
+  - [JavaScript Air](https://javascriptair.com/)
+  - [JavaScript Jabber](https://devchat.tv/js-jabber/)
+
 
 **[⬆ back to top](#table-of-contents)**
 
