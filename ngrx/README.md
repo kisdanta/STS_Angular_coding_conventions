@@ -278,3 +278,38 @@ readonly loadSongsIfNotLoaded$ = createEffect(() => {
   );
 });
 ```
+
+10. Should put State on each action of reducer
+
+Bad
+```ts
+interface State {
+    users: User[];
+    books: Book[];
+    total: number;
+}
+
+export const reducer = createReducer(
+    on(addUser, (state, user)) => ({
+     ...state,
+     users: [...state.users, user]
+    })
+);
+```
+
+Good
+```ts
+interface State {
+    users: User[];
+    books: Book[];
+    total: number;
+}
+
+export const reducer = createReducer(
+    on(addUser, (state, user)): State => ({
+     ...state,
+     users: [...state.users, user]
+    })
+);
+```
+
