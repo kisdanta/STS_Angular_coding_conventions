@@ -92,13 +92,14 @@ Good
 Bad
 ```scss
 .avatar {
-  border-radius: 50% }
+  border-radius: 50%
+}
 ```
 
 Good
 ```scss
 .avatar {
-  border-radius: 50%
+  border-radius: 50%;
 }
 ```
 
@@ -169,7 +170,7 @@ Good
 
 #Clean code
 
-1. Use 0 instead of none to specify that a style has no border.
+1. Use 0 instead of none to specify that a style has no border because it's shorter and save an amount of bandwidth.
 
 Bad
 ```scss
@@ -247,6 +248,15 @@ Another problem using inline-styles is that you need to use !important tag to ov
 5. Use specific classes when necessary.
 
 Bad
+```html
+<div class="section">
+    <aside>
+        <h1>
+            <span></span>
+        </h1>
+    </aside>
+</div>
+```
 ```scss
 .section aside h1 span {
   margin-left: 25%;
@@ -254,6 +264,15 @@ Bad
 ```
 
 Good
+```html
+<div class="section">
+    <aside>
+        <h1>
+            <span class="left-offset"></span>
+        </h1>
+    </aside>
+</div>
+```
 ```scss
 .left-offset {
   margin-left: 25%;
@@ -329,28 +348,24 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
 
 Prefer dash-cased variable names (e.g. $my-variable) over camelCased or snake_cased variable names. It is acceptable to prefix variable names that are intended to be used only within the same file with an underscore (e.g. $_my-variable).
 
-#Mixins
-
-Mixins should be used to DRY up your code, add clarity, or abstract complexity--in much the same way as well-named functions. Mixins that accept no arguments can be useful for this, but note that if you are not compressing your payload (e.g. gzip), this may contribute to unnecessary code duplication in the resulting styles.
-
-#Extend directive
-
-@extend should be avoided because it has unintuitive and potentially dangerous behavior, especially when used with nested selectors. Even extending top-level placeholder selectors can cause problems if the order of selectors ends up changing later (e.g. if they are in other files and the order the files are loaded shifts). Gzipping should handle most of the savings you would have gained by using @extend, and you can DRY up your stylesheets nicely with mixins.
-
 #Nested selectors
 
 Do not nest selectors more than three levels deep!
 
 Bad
 ```scss
-.page {
-  display: flex;
+.container {
+  height: 100%;
   
-  .header {
-    color: white;
-    
-    .left-header {
-      background-color: red;
+  .page {
+    display: flex;
+
+    .header {
+      color: white;
+
+      .left-header {
+        background-color: red;
+      }
     }
   }
 }
@@ -358,16 +373,54 @@ Bad
 
 Good
 ```scss
-.page {
-  display: flex;
+.container {
+  height: 100%;
   
-  .header {
-    color: white;
-  }
+  .page {
+    display: flex;
 
-  .left-header {
-    background-color: red;
+    .header {
+      color: white;
+    }
+
+    .left-header {
+      background-color: red;
+    }
   }
 }
 ```
+
+#Be mindful of the structure
+```html
+- abstracts
+    _variables.scss
+    _functions.scss
+    _mixins.scss
+    _placeholders.scss
+- base
+    _reset.scss
+    _typography.scss
+    ...
+```
+
+#BEM
+BEM – meaning block, element, modifier – is a front-end naming methodology.
+    
+The naming convention follows this pattern:
+```css
+.block {}
+.block__element {}
+.block--modifier {}
+```
+```html
+<div class="block">
+    <div class="block__header block__header--dark"></div>
+    <div class="block__body"></div>
+    <div class="block__footer"></div>
+</div>
+```
+
+- block represents the higher level of an abstraction or component.
+- block__element represents a descendent of .block that helps form .block as a whole.
+- block--modifier represents a different state or version of .block.
 
