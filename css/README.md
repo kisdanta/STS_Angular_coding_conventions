@@ -132,25 +132,7 @@ Good
 
 > “Don’t comment bad code. Rewrite it.” — Brian W. Kernighan
 
-2. Prefer line comments (// in Sass-land) to block comments.
-
-Bad
-```scss
-/*
-.class-one {
-  border-radius: 50%;
-}
-*/
-```
-
-Good
-```scss
-// .class-one {
-//  border-radius: 50%;
-// }
-```
-
-3. Prefer comments on their own line. Avoid end-of-line comments.
+2. Prefer comments on their own line. Avoid end-of-line comments.
 
 Bad
 ```scss
@@ -408,19 +390,20 @@ BEM – meaning block, element, modifier – is a front-end naming methodology.
     
 The naming convention follows this pattern:
 ```css
-.block {}
-.block__element {}
-.block--modifier {}
+.card {}
+.card--rounded {}
+.card__header {}
+.card__header--dark {}
 ```
 ```html
-<div class="block">
-    <div class="block__header block__header--dark"></div>
-    <div class="block__body"></div>
-    <div class="block__footer"></div>
+<div class="card card--rounded">
+    <div class="card__header card__header--dark"></div>
+    <div class="card__body"></div>
+    <div class="card__footer"></div>
 </div>
 ```
 
-- block represents the higher level of an abstraction or component.
-- block__element represents a descendent of .block that helps form .block as a whole.
-- block--modifier represents a different state or version of .block.
+- card represents the higher level of an abstraction or component.
+- card__element represents a descendent of .block that helps form .block as a whole.
+- card--modifier represents a different state or version of .block.
 
