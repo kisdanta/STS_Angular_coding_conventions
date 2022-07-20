@@ -2,14 +2,17 @@
 ## 1. File Structure
 | Symbol        | Structure                     | Example                       |                
 | ------------- | ---------------------         | ----------------------------- |
-| Model         | name.model.ts                 | student.model.ts              | 
-| Component     | name.component.ts             | app.component.ts              | 
-| Module        | name.module.ts                | material.module.ts            |     
+| Module        | name.module.ts                | material.module.ts            |
+| Routing       | name-routing.module.ts        | user-routing.module.ts        |
+| Component     | name.component.ts             | app.component.ts              |    
 | Directive     | name.directive.ts             | validate.directive.ts         |    
 | Pipe          | name.pipe.ts                  | format.pipe.ts                | 
 | Service       | name.service.ts               | app.service.ts                | 
 | Store         | name.store.ts                 | steps.store.ts                | 
-| Util          | name.utils.ts                 | date.utils.ts                 |  
+| Util          | name.utils.ts                 | date.utils.ts                 |
+| Model         | name.model.ts                 | student.model.ts              | 
+| Interface     | name.interface.ts             | student.interface.ts          | 
+| Enum          | name.enum.ts                  | http-code.enum.ts             | 
 | Constant      | name.constants.ts             | key-code.constants.ts         | 
 | Unit test     | name.component.spec.ts        | hero.component.spec.ts        | 
 | E2E test      | name.component.e2e-spec.ts    | hero.component.e2e-spec.ts    | 
@@ -26,7 +29,7 @@
 >
 >Why? One component per file avoids hidden bugs that often arise when combining components in a file where they may share variables, create unwanted closures, or unwanted coupling with dependencies.
 >
->Why? A single component can be the default export for its file which facilitates lazy loading with the router.W
+>Why? A single component can be the default export for its file which facilitates lazy loading with the router.
 ### Example:
     ✅ Good
     // student.model.ts
@@ -49,7 +52,7 @@
         street: string;
     }
 
-### 2.2 Small funtions
+### 2.2 Small functions
 >Do define small functions
 >
 >Consider limiting to no more than 75 lines.
@@ -195,20 +198,20 @@
 <br>
 
 ## 5. Member order
-1. Private readonly properties
-2. Private properties
-3. Protected readonly properties
-4. Protected properties
-5. Public readonly properties
-6. Public properties
-7. Setters
-8. Getters
-9. Inputs
-10. Outputs
-11. ViewChild
-12. ViewChildren
-13. HostBinding
-14. HostListener
+1. Inputs
+2. Outputs
+3. ViewChild
+4. ViewChildren
+5. HostBinding
+6. HostListener
+7. Private readonly properties
+8. Private properties
+9. Protected readonly properties
+10. Protected properties
+11. Public readonly properties
+12. Public properties
+13. Setters
+14. Getters
 15. Constructor
 16. Lifecycle hooks
     1. ngOnChanges
@@ -250,16 +253,16 @@
 >Why? You should use an alias when the directive name is also an input property, and the directive name doesn't describe the property.
 ### Example:
     ✅ Good
-    export class HeroButtonComponent {
-        // Pointless aliases
-        @Output('heroChangeEvent') heroChange = new EventEmitter<any>();
-        @Input('labelAttribute') label: string;
+        export class HeroButtonComponent {
+        // No aliases
+        @Input() label = '';
+        @Output() heroChange = new EventEmitter<any>();
     }
     ❌ Bad
     export class HeroButtonComponent {
-        // No aliases
-        @Output() heroChange = new EventEmitter<any>();
-        @Input() label = '';
+        // Pointless aliases
+        @Input('labelAttribute') label: string;
+        @Output('heroChangeEvent') heroChange = new EventEmitter<any>();
     }
 
 <br>
