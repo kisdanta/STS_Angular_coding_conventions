@@ -1,112 +1,106 @@
-# STS_Angular_coding_conventions-
-
-#Formatting
-
-1. Use soft tabs (2 spaces) for indentation.
-
-Bad
+# CSS
+## 1. Formatting
+### 1.1 Use soft tabs (2 spaces) for indentation
 ```scss
-.header {
-       padding: 0;
-}
-```
-
-Good
-```scss
+✅ Good
 .header {
   padding: 0;
 }
+
+❌ Bad
+.header   {
+    padding: 0;
+}
 ```
 
-2. Prefer dashes over camelCasing in class names.
+### 1.2 Prefer dashes over camelCasing in class names.
 
-Bad
 ```scss
+✅ Good
+.toggle-button {
+  color: red;
+}
+
+❌ Bad
 .toggleButton {
   color: red;
 }
 ```
 
-Good
-```scss
-.toggle-button {
-  color: red;
-}
-```
-
-3. Avoid Using id Selectors
+### 1.3 Avoid Using id Selectors
 >Because you can only have one element per id per document, rule sets that use id selectors are hard to repurpose.
 
-4. When using multiple selectors in a rule declaration, give each selector its own line.
+### 1.4 When using multiple selectors in a rule declaration, give each selector its own line.
 
-Bad
 ```scss
-.red, .blue, .green {
-  background-color: white;
-}
-```
-
-Good
-```scss
+✅ Good
 .red,
 .blue,
 .green {
   background-color: white;
 }
+
+❌ Bad
+.red, .blue, .green {
+  background-color: white;
+}
 ```
 
-5. Put a space before the opening brace **{** in rule declarations.
+### 1.5 Put a space before the opening brace **{** in rule declarations.
 
-Bad
 ```scss
+✅ Good
+.header {
+  /* ... */
+}
+
+❌ Bad
 .header{
   /* ... */
 }
 ```
 
-Good
+### 1.6 In properties, put a space after, but not before, the **:** character.
+
 ```scss
+✅ Good
 .header {
-  /* ... */
+  color: red;
 }
-```
 
-6. In properties, put a space after, but not before, the **:** character.
-
-Bad
-```scss
+❌ Bad
 .header {
   color:red;
 }
 ```
 
-Good
+### 1.7 Put closing braces **}** of rule declarations on a new line.
+
 ```scss
-.header {
-  color: red;
+✅ Good
+.avatar {
+  border-radius: 50%;
 }
-```
 
-7. Put closing braces **}** of rule declarations on a new line.
-
-Bad
-```scss
+❌ Bad
 .avatar {
   border-radius: 50%
 }
 ```
 
-Good
+### 1.8 Put blank lines between rule declarations.
+
 ```scss
-.avatar {
+✅ Good
+.class-one {
   border-radius: 50%;
 }
-```
 
-8. Put blank lines between rule declarations.
+.class-two {
+  border-radius: 50%;
+}
 
-Bad
-```scss
+❌ Bad
 .class-one {
   border-radius: 50%;
 }
@@ -115,81 +109,49 @@ Bad
 }
 ```
 
-Good
-```scss
-.class-one {
-  border-radius: 50%;
-}
+## 2. Comments
 
-.class-two {
-  border-radius: 50%;
-}
-```
-
-#Comments
-
-1. avoid comments
+### 2.1 avoid comments
 
 > “Don’t comment bad code. Rewrite it.” — Brian W. Kernighan
 
-2. Prefer comments on their own line. Avoid end-of-line comments.
+### 2.2 Prefer comments on their own line. Avoid end-of-line comments.
 
-Bad
 ```scss
+✅ Good
+  // comment here
+.class-one {
+  // comment here
+  border-radius: 50%;
+}
+
+❌ Bad
 .class-one { // comment here
   border-radius: 50%; // comment here
 }
 ```
 
-Good
+## 3. Clean code
+
+###3.1 Use 0 instead of none to specify that a style has no border because it's shorter and save an amount of bandwidth.
+
 ```scss
-// comment here
-.class-one {
-  // comment here
-  border-radius: 50%;
+✅ Good
+.box {
+  border: 0;
 }
-```
 
-#Clean code
-
-1. Use 0 instead of none to specify that a style has no border because it's shorter and save an amount of bandwidth.
-
-Bad
-```scss
+❌ Bad
 .box {
   border: none;
 }
 ```
 
-Good
-```scss
-.box {
-  border: 0;
-}
-```
-
-2. DRY
+### 3.2 DRY
 > DRY stands for "Don't Repeat Yourself". As we can understand from its name, DRY aims to avoid repetition as much as possible.
 
-Bad
 ```scss
-.submit-btn {
-  padding: 10px 30px;
-  text-align: center;
-
-  background: pink;
-}
-
-.cancel-btn {
-  padding: 10px 30px;
-  text-align: center;
-
-  background: gray;
-}
-```
-
-Good
-```scss
+✅ Good
 .btn {
   padding: 10px 30px;
   text-align: center;
@@ -202,12 +164,32 @@ Good
 .cancel-btn {
   background: gray;
 }
+
+❌ Bad
+.submit-btn {
+  padding: 10px 30px;
+  text-align: center;
+
+  background: pink;
+}
+
+.cancel-btn {
+  padding: 10px 30px;
+  text-align: center;
+
+  background: gray;
+}
 ```
 
-3. Use Shorthands
+### 3.3 Use Shorthands
 
-Bad
 ```scss
+✅ Good
+.box {
+  padding: 10px 20px;
+}
+
+❌ Bad
 .box {
   padding-left: 20px;
   padding-right: 20px;
@@ -216,36 +198,12 @@ Bad
 }
 ```
 
-Good
-```scss
-.box {
-  padding: 10px 20px;
-}
-```
-
-4. Don't Use Inline-Styles
+### 3.4 Don't Use Inline-Styles
 > According to the separation of concerns principle, CSS, and HTML should be separated for reasons like better readability and maintenance.
 Another problem using inline-styles is that you need to use !important tag to override!!
 
-5. Use specific classes when necessary.
-
-Bad
-```html
-<div class="section">
-    <aside>
-        <h1>
-            <span></span>
-        </h1>
-    </aside>
-</div>
-```
-```scss
-.section aside h1 span {
-  margin-left: 25%;
-}
-```
-
-Good
+### 3.5 Use specific classes when necessary.
+✅ Good
 ```html
 <div class="section">
     <aside>
@@ -261,10 +219,33 @@ Good
 }
 ```
 
-6. Drop units from zero values.
-
-Bad
+❌ Bad
+```html
+<div class="section">
+    <aside>
+        <h1>
+            <span></span>
+        </h1>
+    </aside>
+</div>
+```
 ```scss
+.section aside h1 span {
+  margin-left: 25%;
+}
+```
+
+### 3.6 Drop units from zero values.
+
+```scss
+✅ Good
+div {
+  margin: 20px 0;
+  letter-spacing: 0;
+  padding: 0 5px;
+}
+
+❌ Bad
 div {
   margin: 20px 0px;
   letter-spacing: 0%;
@@ -272,20 +253,11 @@ div {
 }
 ```
 
-Good
-```scss
-div {
-  margin: 20px 0;
-  letter-spacing: 0;
-  padding: 0 5px;
-}
-```
-
-#Sass
+## 4. Sass
 
 > Ordering of property declarations
 
-1. Property declarations
+#### - Property declarations
 
 List all standard property declarations, anything that isn't an @include or a nested selector.
 
@@ -297,7 +269,7 @@ List all standard property declarations, anything that isn't an @include or a ne
 }
 ```
 
-2. @include declarations
+#### - @include declarations
 
 Grouping @includes at the end makes it easier to read the entire selector.
 
@@ -310,7 +282,7 @@ Grouping @includes at the end makes it easier to read the entire selector.
 }
 ```
 
-3. Nested selectors
+#### - Nested selectors
 
 Nested selectors, if necessary, go last, and nothing goes after them. Add whitespace between your rule declarations and nested selectors, as well as between adjacent nested selectors. Apply the same guidelines as above to your nested selectors.
 
@@ -326,16 +298,33 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
 }
 ```
 
-#Variables
+## 5. Variables
 
-Prefer dash-cased variable names (e.g. $my-variable) over camelCased or snake_cased variable names. It is acceptable to prefix variable names that are intended to be used only within the same file with an underscore (e.g. $_my-variable).
+> Prefer dash-cased variable names (e.g. $my-variable) over camelCased or snake_cased variable names. It is acceptable to prefix variable names that are intended to be used only within the same file with an underscore (e.g. $_my-variable).
 
-#Nested selectors
+## 6. Nested selectors
 
-Do not nest selectors more than three levels deep!
+> Do not nest selectors more than three levels deep!
 
-Bad
 ```scss
+✅ Good
+.container {
+  height: 100%;
+
+  .page {
+    display: flex;
+
+    .header {
+      color: white;
+    }
+
+    .left-header {
+      background-color: red;
+    }
+  }
+}
+
+❌ Bad
 .container {
   height: 100%;
   
@@ -353,26 +342,7 @@ Bad
 }
 ```
 
-Good
-```scss
-.container {
-  height: 100%;
-  
-  .page {
-    display: flex;
-
-    .header {
-      color: white;
-    }
-
-    .left-header {
-      background-color: red;
-    }
-  }
-}
-```
-
-#Be mindful of the structure
+## 7. Be mindful of the structure
 ```html
 - abstracts
     _variables.scss
@@ -384,11 +354,10 @@ Good
     _typography.scss
     ...
 ```
-
-#BEM
-BEM – meaning block, element, modifier – is a front-end naming methodology.
+## 8. BEM
+> BEM – meaning block, element, modifier – is a front-end naming methodology.
     
-The naming convention follows this pattern:
+#### The naming convention follows this pattern:
 ```css
 .card {}
 .card--rounded {}

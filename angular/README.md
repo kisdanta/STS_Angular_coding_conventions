@@ -15,9 +15,7 @@
 | Enum          | name.enum.ts                  | http-code.enum.ts             | 
 | Constant      | name.constants.ts             | key-code.constants.ts         | 
 | Unit test     | name.component.spec.ts        | hero.component.spec.ts        | 
-| E2E test      | name.component.e2e-spec.ts    | hero.component.e2e-spec.ts    | 
-
-<br>
+| E2E test      | name.component.e2e-spec.ts    | hero.component.e2e-spec.ts    |
 
 ## 2. Single responsibility
 ### 2.1 One class per file
@@ -67,8 +65,6 @@
 >
 >Why? Small functions help avoid hidden bugs that come with large functions that share variables with external scope, create unwanted closures, or unwanted coupling with dependencies.
 
-<br>
-
 ## 3. Naming
 
 ### 3.1 Separate file names with dots and dashes
@@ -93,6 +89,7 @@
     
     ❌ Bad
     student-list-service.ts
+    student-list.srv.ts
 
 ### 3.2 Symbols and file names
 >Do use consistent names for all assets named after what they represent.
@@ -166,7 +163,6 @@
         selector: 'form-validation',
     })
     export class FormValidationDirective { }
-<br>
 
 ## 4. Component attribute order
 1. Structural directives
@@ -194,8 +190,6 @@
         class="control"
         type="number">
     </input>
-
-<br>
 
 ## 5. Member order
 1. Inputs
@@ -243,8 +237,6 @@
         // TODO
     }
 
-<br>
-
 ## 6. Avoid aliasing inputs and outputs
 >Avoid input and output aliases except when it serves an important purpose.
 
@@ -253,7 +245,7 @@
 >Why? You should use an alias when the directive name is also an input property, and the directive name doesn't describe the property.
 ### Example:
     ✅ Good
-        export class HeroButtonComponent {
+    export class HeroButtonComponent {
         // No aliases
         @Input() label = '';
         @Output() heroChange = new EventEmitter<any>();
@@ -264,8 +256,6 @@
         @Input('labelAttribute') label: string;
         @Output('heroChangeEvent') heroChange = new EventEmitter<any>();
     }
-
-<br>
 
 ## 7. HostListener/HostBinding decorators versus host metadata
 >Consider preferring the @HostListener and @HostBinding to the host property of the @Directive and @Component decorators.
