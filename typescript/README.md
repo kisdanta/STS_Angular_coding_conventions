@@ -41,7 +41,7 @@ import { ... } from '@modules-alias/...';
 
 ## 3. CONSTANT_CASE
 
-`global constant values`, `including enum values`
+`global constant values`
 
 ```ts
 export const GLOBAL_CONSTANT = 'value';
@@ -87,8 +87,8 @@ When creating a local-scope alias of an existing symbol, use the format of the e
 const CAPACITY = 5;
 
 class Teapot {
-  readonly BrewStateEnum = BrewStateEnum;
-  readonly CAPACITY = CAPACITY;
+    readonly BrewStateEnum = BrewStateEnum;
+    readonly CAPACITY = CAPACITY;
 }
 ```
 
@@ -103,20 +103,20 @@ There are two types of comments, JSDoc (`/** ... */`) and non-JSDoc ordinary com
 ```ts
 /** This class demonstrates how parameter properties are documented. */
 class ParamProps {
-  /**
-   * @param percolator The percolator used for brewing.
-   * @param beans The beans to brew.
-   */
-  constructor(private readonly percolator: Percolator, private readonly beans: CoffeeBean[]) {}
+    /**
+     * @param percolator The percolator used for brewing.
+     * @param beans The beans to brew.
+     */
+    constructor(private readonly percolator: Percolator, private readonly beans: CoffeeBean[]) {}
 
-  /**
-   * Brews coffee.
-   * @param amountLitres The amount to brew. Must fit the pot size!
-   */
-  brew(amountLitres: number) {
-    // This implementation creates terrible coffee, but whatever.
-    // TODO(b/12345): Improve percolator brewing.
-  }
+    /**
+     * Brews coffee.
+     * @param amountLitres The amount to brew. Must fit the pot size!
+     */
+    brew(amountLitres: number) {
+        // This implementation creates terrible coffee, but whatever.
+        // TODO(b/12345): Improve percolator brewing.
+    }
 }
 ```
 
@@ -132,18 +132,18 @@ Restricting visibility of properties, methods, and entire types helps with keepi
 
 ```ts
 class Foo {
-  /*  public modifier not needed */
-  bar = new Bar(); // ✅GOOD:
-  public bar = new Bar(); // ❌BAD:
+    /*  public modifier not needed */
+    bar = new Bar(); // ✅GOOD:
+    public bar = new Bar(); // ❌BAD:
 
-  /* public modifier allowed */
-  constructor(public baz: Baz) {}
+    /* public modifier allowed */
+    constructor(public baz: Baz) {}
 }
 
 /* converting private methods to non-exported functions */
 const privateProperty = true;
 function privateFunction(): boolean {
-  return privateProperty;
+    return privateProperty;
 }
 ```
 
@@ -152,7 +152,7 @@ function privateFunction(): boolean {
 - Constructor calls must use parentheses, even when no arguments are passed:
 
 ```ts
-const x = new Foo(); // ❌BAD
+const x = new Foo; // ❌BAD
 const x = new Foo(); // ✅GOOD
 ```
 
@@ -163,21 +163,8 @@ class UnnecessaryConstructor {
     constructor() {} ❌BAD
 }
 class UnnecessaryConstructor {
-    ✅GOOD
+✅GOOD
 }
-```
-
-## 3. Parameter properties
-
-- Rather than define a property in a class member, use a TypeScript parameter property.
-
-```ts
-class Man {
-  constructor(readonly name: string) {}
-}
-
-let dad = new Man('Tony');
-console.log(dad.name);
 ```
 
 ## 4. Field initializers
@@ -186,14 +173,18 @@ If a class member is not a parameter, initialize it where it's declared, which s
 
 ```ts
 class Foo {
-  private readonly userList: string[];
-  constructor() {
-    this.userList = []; // ❌BAD
-  }
+    private readonly userList: string[];
+    public age: number;
+
+    constructor() {
+        this.userList = []; // ❌BAD
+        this.age = 1;
+    }
 }
 
 class Foo {
-  private readonly userList: string[] = []; // ✅GOOD
+    private readonly userList: string[] = []; // ✅GOOD
+    public age = 1;
 }
 ```
 
@@ -212,7 +203,7 @@ class Bar {
         this.barInternal = value;
     }
 
-    -----------------------------
+-----------------------------
     // ✅GOOD
     public bar;
 }
@@ -250,87 +241,68 @@ throw Error('Foo is not a valid bar.'); // ❌BAD
 throw new Error('Foo is not a valid bar.'); // ✅GOOD
 ```
 
-## 9. Iterating objects
-
-Iterating objects with `for (... in ...)` is error prone. It will include enumerable properties from the prototype chain.
-
-Do not use unfiltered `for (... in ...)` statements:
-
-```ts
-//❌BAD
-for (const x in someObj) {
-  // x could come from some parent prototype!
-}
-
-//✅GOOD
-for (const x in someObj) {
-  if (!someObj.hasOwnProperty(x)) continue;
-  // now x was definitely defined on someObj
-}
-```
-
-## 10. Control flow statements & blocks
+## 9. Control flow statements & blocks
 
 Control flow statements spanning multiple lines always use blocks for the containing code.
 
 ```ts
 //❌BAD
 if (x)
-  x.doFoo();
+    x.doFoo();
 for (let i = 0; i < x; i++)
-  doSomethingWithALongMethodName(i);
+    doSomethingWithALongMethodName(i);
 
 -----------------------------------------
 //✅GOOD
 for (let i = 0; i < x; i++) {
-  doSomethingWith(i);
-  andSomeMore();
+    doSomethingWith(i);
+    andSomeMore();
 }
 if (x) {
-  doSomethingWithALongMethodName(x);
+    doSomethingWithALongMethodName(x);
 }
 
 if (x) x.doFoo();
 ```
 
-## 11. Switch Statements
+## 10. Switch Statements
 
 All switch statements must contain a `default` statement group, even if it contains no code.
 
 ```ts
 //❌BAD
 switch (x) {
-  case Y:
-    doSomethingElse();
-    break;
+    case Y:
+        doSomethingElse();
+        break;
 }
 
 //✅GOOD
 switch (x) {
-  case Y:
-    doSomethingElse();
-    break;
-  default:
-  // nothing to do.
+    case Y:
+        doSomethingElse();
+        break;
+    default:
+    // nothing to do.
 }
 ```
 
-## 12. Equality Checks
+## 11. Equality Checks
 
 Always use triple equals `(===)` and not equals `(!==)`.
 
 ```ts
 //❌BAD
 if (foo == 'bar' || baz != bam) {
-  // Hard to understand behaviour due to type coercion.
+    // Hard to understand behaviour due to type coercion.
 }
 //✅GOOD
 if (foo === 'bar' || baz !== bam) {
-  // All good here.
+    // All good here.
 }
 ```
 
-## 13. Function Declarations
+## 12. Function Declarations
 
 Use `function foo() { ... }` to declare named functions instead of assigning a function expression into a local variable.
 
@@ -342,7 +314,7 @@ function foo() { ... }
 const foo = function() { ... }
 ```
 
-## 14. Use arrow functions in expressions
+## 13. Use arrow functions in expressions
 
 Always use arrow functions instead of pre-ES6 function expressions defined with the `function` keyword.
 
@@ -352,47 +324,47 @@ bar(() => { this.doSomething(); }) //✅GOOD
 bar(function() { ... }) //❌BAD
 ```
 
-## 15.Arrow functions as properties
+## 14.Arrow functions as properties
 Classes usually should not contain properties initialized to arrow functions
 
 ```ts
 // ❌BAD
 class DelayHandler {
-  constructor() {
-    // Problem: `this` is not preserved in the callback. `this` in the callback
-    // will not be an instance of DelayHandler.
-    setTimeout(this.patienceTracker, 5000);
-  }
-  private patienceTracker() {
-    this.waitedPatiently = true;
-  }
+    constructor() {
+        // Problem: `this` is not preserved in the callback. `this` in the callback
+        // will not be an instance of DelayHandler.
+        setTimeout(this.patienceTracker, 5000);
+    }
+    private patienceTracker() {
+        this.waitedPatiently = true;
+    }
 }
 // ❌BAD
 // Arrow functions usually should not be properties.
 class DelayHandler {
-  constructor() {
-    // Bad: this code looks like it forgot to bind `this`.
-    setTimeout(this.patienceTracker, 5000);
-  }
-  private patienceTracker = () => {
-    this.waitedPatiently = true;
-  }
+    constructor() {
+        // Bad: this code looks like it forgot to bind `this`.
+        setTimeout(this.patienceTracker, 5000);
+    }
+    private patienceTracker = () => {
+        this.waitedPatiently = true;
+    }
 }
 
 // ✅GOOD
 class DelayHandler {
-  constructor() {
-    setTimeout(() => {
-      this.patienceTracker();
-    }, 5000);
-  }
-  private patienceTracker() {
-    this.waitedPatiently = true;
-  }
+    constructor() {
+        setTimeout(() => {
+            this.patienceTracker();
+        }, 5000);
+    }
+    private patienceTracker() {
+        this.waitedPatiently = true;
+    }
 }
 ```
 
-## 16.Type Assertions
+## 15.Type Assertions
 
 Type assertion (`x as SomeType`) is unsafe. it only silences the TypeScript compiler, but do not insert any runtime checks to match these assertions, so they can cause your program to crash at runtime.
 
@@ -401,47 +373,47 @@ Type assertion (`x as SomeType`) is unsafe. it only silences the TypeScript comp
 
 // ✅GOOD
 if (x instanceof Foo) {
-  x.foo();
+    x.foo();
 }
 ```
 
-## 17. Type Assertions and Object Literals
+## 16. Type Assertions and Object Literals
 
 Use type annotations (: Foo) instead of type assertions (as Foo) to specify the type of an object literal. This allows detecting refactoring bugs when the fields of an interface change over time.
 
 ```ts
 // ❌BAD
 const foo = {
-  bar: 123,
-  bam: 'abc'
+    bar: 123,
+    bam: 'abc'
 } as Foo;
 
 // ✅GOOD
 const foo: Foo = {
-  bar: 123,
-  bam: 'abc'
+    bar: 123,
+    bam: 'abc'
 };
 ```
 
-## 18. Member property declarations
+## 17. Member property declarations
 
 Interface and class declarations must use the ; character to separate individual member declarations:
 
 ```ts
 // ✅GOOD
 interface Foo {
-  memberA: string;
-  memberB: number;
+    memberA: string;
+    memberB: number;
 }
 
 // ❌BAD
 interface Foo {
-  memberA: string,
-  memberB: number,
+    memberA: string,
+    memberB: number,
 }
 ```
 
-## 19. Optimization compatibility for module object imports
+## 18. Optimization compatibility for module object imports
 
 When importing a module object, directly access properties on the module object rather than passing it around. This ensures that modules can be analyzed and optimized. Treating module imports as namespaces is fine.
 
@@ -449,24 +421,24 @@ When importing a module object, directly access properties on the module object 
 // ✅GOOD
 import { method1, method2 } from 'utils';
 class A {
-  readonly utils = { method1, method2 };
+    readonly utils = { method1, method2 };
 }
 
 // ❌BAD
 import * as utils from 'utils';
 
 class A {
-  readonly utils = utils;
+    readonly utils = utils;
 }
 ```
 
-## 20. Debugger statements
+## 19. Debugger statements
 
 Debugger statements must not be included in `production` code.
 
 ```ts
 function debugMe() {
-  debugger;
+    debugger;
 }
 ```
 
@@ -495,7 +467,7 @@ type CoffeeResponse = Latte | Americano | undefined | null;
 type CoffeeResponse = Latte|Americano;
 
 class CoffeeService {
-  getLatte(): CoffeeResponse|undefined { ... };
+    getLatte(): CoffeeResponse|undefined { ... };
 }
 ```
 
@@ -518,7 +490,7 @@ Use == null / != null (not === / !==) to check for null / undefined
 if (error !== null)
 
 // ✅GOOD
-if (error != null)
+    if (error != null)
 
 ```
 
@@ -530,17 +502,17 @@ In addition, TypeScript supports a special construct for optional parameters and
 
 // ❌BAD
 interface CoffeeOrder {
-  sugarCubes: number;
-  milk: Whole | LowFat  |HalfHalf | undefined;
+    sugarCubes: number;
+    milk: Whole | LowFat  |HalfHalf | undefined;
 }
 
 function pourCoffee(volume: Milliliter | undefine) { ... }
 
 ---------------------------------------
 // ✅GOOD
-interface CoffeeOrder {
-  sugarCubes: number;
-  milk?: Whole|LowFat|HalfHalf;
+    interface CoffeeOrder {
+    sugarCubes: number;
+    milk?: Whole|LowFat|HalfHalf;
 }
 
 function pourCoffee(volume?: Milliliter) { ... }
@@ -556,14 +528,14 @@ However, when declaring types for objects, use `interfaces` instead of a `type a
 ```ts
 // ✅GOOD
 interface User {
-  firstName: string;
-  lastName: string;
+    firstName: string;
+    lastName: string;
 }
 
 // ❌BAD
 type User = {
-  firstName: string;
-  lastName: string;
+    firstName: string;
+    lastName: string;
 };
 ```
 
@@ -592,19 +564,19 @@ If you are tempted to create a Pair type, instead use a `tuple type`:
 ```ts
 // ❌BAD
 interface Pair {
-  first: string;
-  second: string;
+    first: string;
+    second: string;
 }
 function splitInHalf(input: string): Pair {
-  ...
-  return {first: x, second: y};
+...
+    return {first: x, second: y};
 }
 
 
 // ✅GOOD
 function splitInHalf(input: string): [string, string] {
-  ...
-  return [x, y];
+...
+    return [x, y];
 }
 
 // Use it like:
@@ -621,9 +593,9 @@ const [leftHalf, rightHalf] = splitInHalf('my string');
 
 ```ts
 try {
-  throw new Error('Error');
+    throw new Error('Error');
 } catch (error) {
-  console.error(error);
+    console.error(error);
 }
 ```
 
