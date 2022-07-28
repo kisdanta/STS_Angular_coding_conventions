@@ -1,6 +1,6 @@
-# STS_Angular_coding_conventions-
+# NgRx
 
-1. Structure
+## 1. Structure
 
 ```
 - state (contains the type definition of the store and initialState)
@@ -16,35 +16,25 @@
 - adapters - optional (contains the adapters)
 ```
 
-2. File naming
+## 2. File naming
 
 >It is better to prefix these filenames with the name of the feature they belong to
 
-Bad
 ```
-state.ts / selectors.ts / effects.ts ...
-```
-
-Good
-```
+✅ Good
 person.selectors.ts
 person.effects.ts
 ```
 
-3. Keep a string enum of your feature names
-
-Bad
 ```ts
-@NgModule({
-    StoreModule.forFeature({'user': userReducer}),
-})
-export class UserModule {}
-
-const bookmarks = createFeatureSelector('user');
+❌ Bad
+state.ts / selectors.ts / effects.ts ...
 ```
 
-Good
+## 3. Keep a string enum of your feature names
+
 ```ts
+✅ Good
 export enum Features {
     User = 'user',
     Article = 'article',
@@ -58,11 +48,33 @@ export class UserModule {}
 
 const bookmarks = createFeatureSelector(Features.User);
 ```
-
-4. (Almost) never subscribe to Store
-
-Bad
 ```ts
+❌ Bad
+@NgModule({
+    StoreModule.forFeature({'user': userReducer}),
+})
+export class UserModule {}
+
+const bookmarks = createFeatureSelector('user');
+```
+
+## 4. (Almost) never subscribe to Store
+
+```ts
+✅ Good
+@Component({
+    template: `
+    <span>{{ name$ | async }}</span>
+  `
+})
+export class ComponentWithStore {
+    name$ = this.store.select(state => state.name);
+
+    constructor(store: Store<AppState>) {}
+}
+```
+```ts
+❌ Bad
 @Component({
     template: `
     <span>{{ name }}</span>
@@ -88,24 +100,22 @@ export class ComponentWithStore implements OnInit, OnDestroy {
 }
 ```
 
-Good
-```ts
-@Component({
-    template: `
-    <span>{{ name$ | async }}</span>
-  `
-})
-export class ComponentWithStore {
-    name$ = this.store.select(state => state.name);
+## 5. Handle logic code inside effect if you can
 
-    constructor(store: Store<AppState>) {}
+```ts
+✅ Good
+export class Effects {
+    reservedName$ = createEffect(() => this.actions$.pipe(
+        ofType(actions.setName),
+        filter(({payload}) => payload === 'ReservedName'),
+        map(() => reservedNameEncountered())
+    ));
+
+    constructor(actions$: Actions) {}
 }
 ```
-
-5. Handle logic code inside effect if you can
-
-Bad
 ```ts
+❌ Bad
 @Component({
     template: `
     <span>{{name}}</span>
@@ -126,23 +136,14 @@ export class ComponentWithStore implements OnInit {
 }
 ```
 
-Good
+## 6. Don't pipe the Observable selected from the store
 ```ts
-export class Effects {
-    reservedName$ = createEffect(() => this.actions$.pipe(
-        ofType(actions.setName),
-        filter(({payload}) => payload === 'ReservedName'),
-        map(() => reservedNameEncountered())
-    ));
-
-    constructor(actions$: Actions) {}
-}
+✅ Good
+// selectors.ts
+const activeUsers = (state: AppState) => state.users.filter(user => user.isActive)
 ```
-
-6. Don't pipe the Observable selected from the store
-
-Bad
 ```ts
+❌ Bad
 export class ComponentWithStore {
     activeUsers$ = this.store.select(state => state.users).pipe(
         map(users => users.filter(user => user.isActive)),
@@ -152,33 +153,9 @@ export class ComponentWithStore {
 }
 ```
 
-Good
+## 7. Don't use combineLatest. Use named selectors instead
 ```ts
-// selectors.ts
-const activeUsers = (state: AppState) => state.users.filter(user => user.isActive)
-```
-
-7. Don't use combineLatest. Use named selectors instead
-
-Bad
-```ts
-export class ClothingItemListComponent {
-    clothingItems$ = combineLatest([
-        this.store.select(state => state.clothingItems),
-        this.store.select(state => state.cart),
-    ]).pipe(
-        map(([items, cart]) => items.map(item => ({
-            ...item,
-            isInShoppingCart: cart.map(cartItem => cartItem.id).includes(item.id),
-        })))
-    );
-
-    constructor(store: Store<AppState>) {}
-}
-```
-
-Good
-```ts
+✅ Good
 const allItems = (state: AppState) => state.clothingItems;
 
 const shoppingCart = (state: AppState) => state.shoppingCart;
@@ -195,10 +172,44 @@ const clothingItems = createSelector(
     );
 ```
 
-8. Use selectors for the derived state
-
-Bad
 ```ts
+❌ Bad
+export class ClothingItemListComponent {
+    clothingItems$ = combineLatest([
+        this.store.select(state => state.clothingItems),
+        this.store.select(state => state.cart),
+    ]).pipe(
+        map(([items, cart]) => items.map(item => ({
+            ...item,
+            isInShoppingCart: cart.map(cartItem => cartItem.id).includes(item.id),
+        })))
+    );
+
+    constructor(store: Store<AppState>) {}
+}
+```
+
+## 8. Use selectors for the derived state
+
+```ts
+✅ Good
+export const musiciansReducer = createReducer(
+    on(musiciansPageActions.search, (state, { query }) => ({
+        ...state,
+        query,
+    }))
+);
+
+export const selectFilteredMusicians = createSelector(
+    selectAllMusicians,
+    selectMusicianQuery,
+    (musicians, query) =>
+        musicians.filter(({ name }) => name.includes(query))
+);
+```
+
+```ts
+❌ Bad
 export const musiciansReducer = createReducer(
     on(musiciansPageActions.search, (state, { query }) => {
         // `filteredMusicians` is derived from `musicians` and `query`
@@ -215,45 +226,9 @@ export const musiciansReducer = createReducer(
 );
 ```
 
-Good
+## 9. Don't dispatch actions conditionally
 ```ts
-export const musiciansReducer = createReducer(
-    on(musiciansPageActions.search, (state, { query }) => ({
-        ...state,
-        query,
-    }))
-);
-
-export const selectFilteredMusicians = createSelector(
-    selectAllMusicians,
-    selectMusicianQuery,
-    (musicians, query) =>
-        musicians.filter(({ name }) => name.includes(query))
-);
-```
-
-9. Don't dispatch actions conditionally
-
-Bad
-
-```ts
-ngOnInit(): void {
-    this.store.select(selectSongs).pipe(
-        tap((songs) => {
-            // if the songs are not loaded
-            if (!songs) {
-                // then dispatch the `loadSongs` action
-                this.store.dispatch(songsActions.loadSongs());
-            }
-        }),
-        take(1)
-    ).subscribe();
-}
-```
-
-Good
-
-```ts
+✅ Good
 ngOnInit(): void {
     this.store.dispatch(songsPageActions.opened());
 }
@@ -279,10 +254,41 @@ readonly loadSongsIfNotLoaded$ = createEffect(() => {
 });
 ```
 
-10. Should put State on each action of reducer
-
-Bad
 ```ts
+❌ Bad
+ngOnInit(): void {
+    this.store.select(selectSongs).pipe(
+        tap((songs) => {
+            // if the songs are not loaded
+            if (!songs) {
+                // then dispatch the `loadSongs` action
+                this.store.dispatch(songsActions.loadSongs());
+            }
+        }),
+        take(1)
+    ).subscribe();
+}
+```
+
+## 10. Should put State on each action of reducer
+```ts
+✅ Good
+interface State {
+    users: User[];
+    books: Book[];
+    total: number;
+}
+
+export const reducer = createReducer(
+    on(addUser, (state, user)): State => ({
+     ...state,
+     users: [...state.users, user]
+    })
+);
+```
+
+```ts
+❌ Bad
 interface State {
     users: User[];
     books: Book[];
@@ -297,19 +303,5 @@ export const reducer = createReducer(
 );
 ```
 
-Good
-```ts
-interface State {
-    users: User[];
-    books: Book[];
-    total: number;
-}
 
-export const reducer = createReducer(
-    on(addUser, (state, user)): State => ({
-     ...state,
-     users: [...state.users, user]
-    })
-);
-```
 
