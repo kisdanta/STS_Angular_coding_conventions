@@ -1,4 +1,18 @@
 # Angular
+
+## Table of Contents
+
+1. [File Structure](#1-file-Structure)
+1. [Single responsibility](#2-single-responsibility)
+1. [Naming](#3-naming)
+1. [Component attribute order](#4-component-attribute-order)
+1. [Member order](#5-member-order)
+1. [Avoid aliasing inputs and outputs](#6-avoid-aliasing-inputs-and-outputs)
+1. [HostListener/HostBinding decorators versus host metadata](#7-hostListener--HostBinding-decorators-versus-host-metadata)
+1. [Implement lifecycle hook interfaces](#8-implement-lifecycle-hook-interfaces)
+
+**[⬆ back to top](#table-of-contents)**
+
 ## 1. File Structure
 | Symbol        | Structure                     | Example                       |                
 | ------------- | ---------------------         | ----------------------------- |
@@ -16,6 +30,8 @@
 | Constant      | name.constants.ts             | key-code.constants.ts         | 
 | Unit test     | name.component.spec.ts        | hero.component.spec.ts        | 
 | E2E test      | name.component.e2e-spec.ts    | hero.component.e2e-spec.ts    |
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 2. Single responsibility
 ### 2.1 One class per file
@@ -64,6 +80,8 @@
 >Why? Small functions are easier to maintain.
 >
 >Why? Small functions help avoid hidden bugs that come with large functions that share variables with external scope, create unwanted closures, or unwanted coupling with dependencies.
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 3. Naming
 
@@ -164,6 +182,8 @@
     })
     export class FormValidationDirective { }
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 4. Component attribute order
 1. Structural directives
 2. Animations
@@ -190,6 +210,8 @@
         class="control"
         type="number">
     </input>
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 5. Member order
 1. Inputs
@@ -237,6 +259,8 @@
         // TODO
     }
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 6. Avoid aliasing inputs and outputs
 >Avoid input and output aliases except when it serves an important purpose.
 
@@ -256,6 +280,8 @@
         @Input('labelAttribute') label: string;
         @Output('heroChangeEvent') heroChange = new EventEmitter<any>();
     }
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 7. HostListener/HostBinding decorators versus host metadata
 >Consider preferring the @HostListener and @HostBinding to the host property of the @Directive and @Component decorators.
@@ -289,6 +315,7 @@
         }
     }
 
+**[⬆ back to top](#table-of-contents)**
     
 ## 8. Implement lifecycle hook interfaces
 > Do implement the lifecycle hook interfaces.
@@ -307,3 +334,5 @@
             console.log('The component is initialized');
         }
     }
+
+**[⬆ back to top](#table-of-contents)**

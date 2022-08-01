@@ -1,4 +1,18 @@
 # CSS
+
+## Table of Contents
+
+1. [Formatting](#1-formatting)
+1. [Comments](#2-comments)
+1. [Clean code](#3-clean-code)
+1. [Sass](#4-sass)
+1. [Variables](#5-variables)
+1. [Nested selectors](#6-nested-selectors)
+1. [Be mindful of the structure](#7-be-mindful-of-the-structure)
+1. [BEM](#8-bem)
+
+**[⬆ back to top](#table-of-contents)**
+
 ## 1. Formatting
 ### 1.1 Use soft tabs (2 spaces) for indentation
 ```scss
@@ -109,6 +123,8 @@
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 2. Comments
 
 ### 2.1 avoid comments
@@ -130,6 +146,8 @@
   border-radius: 50%; // comment here
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 3. Clean code
 
@@ -253,6 +271,8 @@ div {
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 4. Sass
 
 > Ordering of property declarations
@@ -298,9 +318,13 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 5. Variables
 
 > Prefer dash-cased variable names (e.g. $my-variable) over camelCased or snake_cased variable names. It is acceptable to prefix variable names that are intended to be used only within the same file with an underscore (e.g. $_my-variable).
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 6. Nested selectors
 
@@ -342,6 +366,8 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 7. Be mindful of the structure
 ```html
 - abstracts
@@ -354,6 +380,9 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
     _typography.scss
     ...
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
 ## 8. BEM
 > BEM – meaning block, element, modifier – is a front-end naming methodology.
     
@@ -376,3 +405,4 @@ Nested selectors, if necessary, go last, and nothing goes after them. Add whites
 - card__element represents a descendent of .block that helps form .block as a whole.
 - card--modifier represents a different state or version of .block.
 
+**[⬆ back to top](#table-of-contents)**

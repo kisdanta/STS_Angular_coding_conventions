@@ -1,4 +1,13 @@
 # Typescript
+
+## Table of Contents
+
+1. [Identifiers](#1-identifiers)
+1. [Language Rules](#2-language-rules)
+1. [Type System](#3-type-system)
+
+**[⬆ back to top](#table-of-contents)**
+
 ## 1. Identifiers
 ### 1.1 UpperCamelCase
 
@@ -122,6 +131,8 @@ class ParamProps {
     }
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## 2. Language Rules
 
@@ -466,6 +477,8 @@ function debugMe() {
 }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## 3. Type System
 
 ### 3.1 Type Inference
@@ -631,3 +644,5 @@ try {
 ### 3.11 Space
 
 > Use `2` spaces. Not `tabs`.
+
+**[⬆ back to top](#table-of-contents)**
