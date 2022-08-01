@@ -79,6 +79,14 @@ loadHTTPURL
 
 >Identifiers should not generally use `$` unless it is a `Observable` or `Subject` variable.
 
+```typescript
+✅ Good
+const subject$ = new Subject();
+
+❌ Bad
+let total$ = 100;
+```
+
 ### 1.7 Naming style
 
 - Names should be two things: `clear` and `precise`;
@@ -156,12 +164,6 @@ class Foo {
     /* public modifier allowed */
     constructor(public baz: Baz) {}
 }
-
-/* converting private methods to non-exported functions */
-const privateProperty = true;
-function privateFunction(): boolean {
-    return privateProperty;
-}
 ```
 
 ### 2.2 Constructors
@@ -198,7 +200,7 @@ class UnnecessaryConstructor {
 ✅ Good
 class Foo {
     private readonly userList: string[] = [];
-    public age = 1;
+    age = 1;
 }
 
 ❌ Bad
@@ -242,8 +244,12 @@ class Bar {
 const c = [];
 c.length = 2;
 
+const items  = [];
+
 ❌ Bad
 const a = new Array(2);
+
+const items = new Array();
 ```
 
 ### 2.6 Variables
@@ -495,7 +501,7 @@ const x: Set<string> = new Set();
 ```
 
 ### 3.2 Nullable/undefined type aliases
-> Type aliases must not include |null or |undefined in a union type.
+> Type aliases must not include null or undefined in a union type.
 
 ```ts
 ✅ Good
@@ -531,9 +537,9 @@ if (error != null)
 if (error !== null)
 ```
 
-### 3.4 Optionals vs |undefined type
+### 3.4 Optionals vs undefined type
 
-> In addition, TypeScript supports a special construct for optional parameters and fields, using `?`:
+> In addition, TypeScript (3.7) supports a special construct for optional parameters and fields, using `?`:
 
 ```ts
 ✅ Good
@@ -547,7 +553,7 @@ function pourCoffee(volume?: Milliliter) { ... }
 ❌ Bad
 interface CoffeeOrder {
     sugarCubes: number;
-    milk: Whole | LowFat  |HalfHalf | undefined;
+    milk: Whole | LowFat  | HalfHalf | undefined;
 }
 
 function pourCoffee(volume: Milliliter | undefine) { ... }
@@ -627,7 +633,7 @@ function splitInHalf(input: string): Pair {
 
 ```ts
 try {
-    throw new Error('Error');
+    // do something
 } catch (error) {
     console.error(error);
 }

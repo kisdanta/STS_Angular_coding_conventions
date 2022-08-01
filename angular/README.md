@@ -328,6 +328,7 @@
             console.log('The component is initialized');
         }
     }
+
     ❌ Bad
     export class HeroButtonComponent {
         onInit() { // misspelled
