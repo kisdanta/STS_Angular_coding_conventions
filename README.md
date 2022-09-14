@@ -1,4 +1,4 @@
-# Angular coding conventions
+# Angular coding convention collection
 
 <a href="https://github.com/kisdanta/STS_Angular_coding_conventions/tree/develop/angular">Angular</a> <br/>
 <a href="https://github.com/kisdanta/STS_Angular_coding_conventions/tree/develop/css">Css</a> <br/>
